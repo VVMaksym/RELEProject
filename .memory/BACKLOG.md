@@ -17,13 +17,13 @@ These targets assume a working Python/Unity environment and no package compatibi
 
 ## Phase 1 — Vertical Slice
 
-- [ ] **B001 — ▶ ACTIVE — Prepare the project skeleton and ML-Agents dependency.** Create `Assets/_Project` according to the architecture, add a compatible ML-Agents package, and add an empty `SumoTraining` scene to Build Settings. **Done when:** Unity opens without compile errors and the `Agent` type is available to a script. **Dependencies:** none.
-- [ ] **B002 — READY — Build the arena and boundary API.** Create a visible circular arena with a configurable radius and an `IsOutside(position)` check. **Done when:** EditMode tests cover points inside, on the edge, and outside. **Dependencies:** B001.
-- [ ] **B003 — READY — Implement `SumoMotor` and heuristic control.** Use one dynamic `Rigidbody2D` with forward/backward movement, rotation, and a shove with cooldown. **Done when:** a human can control the fighter and acceleration/cooldown remain within configured limits. **Dependencies:** B001.
-- [ ] **B004 — READY — Implement the round lifecycle.** `MatchCoordinator` positions two fighters, detects win/loss/draw, and resets without reloading the scene. **Done when:** 100 scripted resets complete without errors or retained velocity. **Dependencies:** B002, B003.
+- [ ] **B001 — ▶ ACTIVE — Prepare the existing `RELESUMO` 3D project and ML-Agents dependency.** Create `Assets/_Project` according to the architecture, verify the existing PC/Mobile Universal Renderer assignments, add a compatible ML-Agents package, and add an empty 3D `SumoTraining` scene to Build Settings. **Done when:** the scene renders a lit 3D test object through the active URP renderer, Unity has no compile errors, and the `Agent` type is available to a script. **Dependencies:** none.
+- [ ] **B002 — READY — Build the 3D arena and boundary API.** Create a raised circular arena on the XZ plane with a configurable radius, floor collider, Y fall threshold, and `IsOutside(position)` check. **Done when:** EditMode tests cover points inside, on the edge, outside the radius, and below the arena. **Dependencies:** B001.
+- [ ] **B003 — READY — Implement the 3D `SumoMotor` and heuristic control.** Use one dynamic `Rigidbody` and `CapsuleCollider` with forward/backward movement, yaw rotation, a shove with cooldown, and locked X/Z rotation for MVP stability. **Done when:** a human can control the fighter and acceleration, rotation, and cooldown remain within configured limits. **Dependencies:** B001.
+- [ ] **B004 — READY — Implement the round lifecycle.** `MatchCoordinator` positions two fighters on the XZ plane, detects radius/fall win/loss/draw conditions, and resets without reloading the scene. **Done when:** 100 scripted resets complete without errors, retained velocity, or incorrect orientation. **Dependencies:** B002, B003.
 - [ ] **B005 — READY — Connect `SumoAgent`.** Implement a fixed observation vector, three actions, and heuristic mapping through `SumoCommand`. **Done when:** Behavior Parameters shows the expected observation/action sizes and both agents move through the same motor API. **Dependencies:** B003, B004.
 - [ ] **B006 — READY — Add `RewardPolicy`.** Implement terminal rewards, a time penalty, and bounded radial shaping with centralized parameters. **Done when:** PlayMode tests verify reward totals for win/loss/draw and one shaping step. **Dependencies:** B004, B005.
-- [ ] **B007 — READY — Assemble the trainable prefab and scene.** Use two instances of one agent prefab, separate team IDs, the same behavior name, and correct collision layers. **Done when:** the scene autonomously runs 1,000 episodes in accelerated mode without exceptions or NaN values. **Dependencies:** B005, B006.
+- [ ] **B007 — READY — Assemble the trainable 3D prefab and scene.** Use two instances of one capsule-based agent prefab, separate team IDs, the same behavior name, and correct 3D collision layers. Add an elevated fixed camera and basic lighting for observation by humans only. **Done when:** the scene autonomously runs 1,000 episodes in accelerated mode without exceptions, NaN values, or fighters tunneling through the arena. **Dependencies:** B005, B006.
 
 ## Phase 2 — First Training
 
@@ -41,8 +41,8 @@ These targets assume a working Python/Unity environment and no package compatibi
 
 ## Phase 4 — LATER, Only After the MVP
 
-- [ ] Ragdoll/joints and individual limb control.
-- [ ] Visual stickmen, animations, VFX, and sound.
+- [ ] Full 3D ragdoll/joints, learned balance, and individual limb control.
+- [ ] Rigged 3D characters, animations, VFX, and sound.
 - [ ] A curriculum with varied masses, forces, arena sizes, and domain randomization.
 - [ ] A tournament between multiple policies/algorithms and a reward-shaping ablation study.
 

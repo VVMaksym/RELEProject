@@ -10,18 +10,20 @@ Phase 1 — Vertical Slice.
 
 ## Active Focus
 
-`B001` — prepare the `Assets/_Project` structure, add ML-Agents, and create the initial training scene.
+`B001` — prepare the `RELESUMO/Assets/_Project` structure, verify the existing 3D URP renderer, add ML-Agents, and create the initial 3D training scene.
 
 ## Current State
 
-- Unity `6000.4.0f1`, URP 2D template.
-- Only the initial `SampleScene` exists; there is no gameplay code or ML-Agents dependency yet.
-- The MVP architecture and critical backlog have been defined.
+- `RELESUMO/` is the canonical Unity 6 Universal 3D project and already contains PC/Mobile URP renderer assets.
+- Only the initial `RELESUMO/Assets/Scenes/SampleScene.unity` exists; there is no gameplay code or ML-Agents dependency yet.
+- `RELEGame/` is the previous 2D project and is no longer the implementation target.
+- The MVP architecture and critical backlog have been updated for 3D.
 
 ## Constraints
 
-- Top-down 2D, two agents, one circular arena.
-- One `Rigidbody2D` per fighter; ragdoll is outside the MVP.
+- 3D simulation on the horizontal XZ plane, two agents, and one circular arena.
+- One `Rigidbody` and `CapsuleCollider` per fighter; X/Z rotation is locked and full ragdoll is outside the MVP.
+- A fixed elevated camera is presentation-only and does not affect agent observations.
 - Build a playable/trainable vertical slice before graphics and extensions.
 - Game physics must not depend on the ML-Agents API.
 

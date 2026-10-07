@@ -2,7 +2,7 @@
 
 ## 1. System Goal
 
-A Unity environment for training and comparing two RL agents. Each agent controls a 2D sumo fighter, tries to remain inside a circular arena, and attempts to push the opponent out.
+A Unity environment for training and comparing two RL agents. Each agent controls a 3D sumo fighter, tries to remain inside a circular arena, and attempts to push the opponent out.
 
 ## 2. Architectural Priorities
 
@@ -13,8 +13,10 @@ A Unity environment for training and comparing two RL agents. Each agent control
 
 ## 3. Technical Context
 
-- Unity `6000.4.0f1`, Universal Render Pipeline 2D.
-- Physics: `Rigidbody2D`, `Collider2D`, zero gravity, top-down view.
+- Canonical Unity project: `RELESUMO/`, created from the Unity 6 Universal 3D template with URP `17.4.0`.
+- The existing `PC_Renderer` and `Mobile_Renderer` assets provide the 3D rendering setup; B001 only needs to verify the active quality/render-pipeline assignment.
+- Physics: `Rigidbody`, `CapsuleCollider`, gravity enabled, with gameplay on the horizontal XZ plane and Y as the vertical axis.
+- Presentation: a fixed elevated perspective camera for the MVP; camera placement does not affect simulation coordinates or observations.
 - RL: Unity ML-Agents; the package has not yet been added to `Packages/manifest.json`.
 - Training: Python trainer (PPO), first against a simple scripted opponent, then through self-play.
 - Main MVP scene: `Assets/_Project/Scenes/SumoTraining.unity`.
@@ -24,8 +26,8 @@ A Unity environment for training and comparing two RL agents. Each agent control
 | Component | Responsibility | Must not |
 |---|---|---|
 | `MatchCoordinator` | Starts/resets rounds, determines win/loss/draw, and ends episodes | Move fighters or calculate ML observations |
-| `ArenaBoundary` | Stores the center/radius, detects when a fighter leaves the arena, and provides normalized edge distance | Assign rewards |
-| `SumoMotor` | Converts movement commands into force/rotation/shove and controls cooldowns | Know about `Agent`, rewards, or match results |
+| `ArenaBoundary` | Stores the center/radius and fall threshold, projects positions onto XZ, detects ring-outs, and provides normalized edge distance | Assign rewards |
+| `SumoMotor` | Converts movement commands into planar force, yaw rotation, and shove impulses; controls cooldowns and upright constraints | Know about `Agent`, rewards, or match results |
 | `SumoAgent` | ML-Agents adapter for observations, actions, heuristic input, and terminal rewards | Reset the scene or directly move transforms |
 | `RewardPolicy` | Single source for dense/terminal reward coefficients | Determine physics or the winner |
 | `ScriptedOpponent` | Simple baseline opponent for validation and the initial curriculum | Be part of the final learned policy |
@@ -37,14 +39,14 @@ A Unity environment for training and comparing two RL agents. Each agent control
 
 ### Start
 
-- Two fighters are placed symmetrically around the center with small randomized position and rotation offsets.
-- Linear velocity, angular velocity, cooldowns, and accumulated state are cleared.
+- Two fighters are placed symmetrically around the center with small randomized XZ position and yaw offsets.
+- Linear velocity, angular velocity, cooldowns, and accumulated state are cleared; both fighters are restored to an upright orientation.
 - Evaluation mode uses an explicitly configured random seed.
 
 ### Termination
 
-- Win: the opponent's center leaves the arena radius.
-- Loss: the agent's own center leaves the arena radius.
+- Win: the opponent's center projected onto XZ leaves the arena radius or falls below the configured Y threshold.
+- Loss: the agent's own center projected onto XZ leaves the arena radius or falls below the configured Y threshold.
 - Draw: both fighters leave during the same physics step, or the time limit expires.
 - `MatchCoordinator` is the single source of truth for episode termination.
 
@@ -52,9 +54,9 @@ A Unity environment for training and comparing two RL agents. Each agent control
 
 ### Normalized Observations
 
-- the agent's local linear velocity `(x, y)` and angular velocity;
-- local vector to the arena center and normalized distance to the edge;
-- opponent's local relative position and velocity;
+- the agent's local planar velocity `(x, z)`, vertical velocity, and yaw angular velocity;
+- local planar vector to the arena center and normalized distance to the edge;
+- opponent's local relative position and velocity in 3D;
 - opponent's facing direction in local space;
 - shove readiness and normalized remaining time.
 
@@ -63,7 +65,7 @@ Observations do not contain world-space coordinates that would tie the policy to
 ### Actions
 
 - continuous: forward/backward movement `[-1, 1]`;
-- continuous: rotation `[-1, 1]`;
+- continuous: yaw rotation `[-1, 1]`;
 - continuous: shove/dash strength `[0, 1]`, with cooldown enforced by `SumoMotor`.
 
 ### Rewards
@@ -78,7 +80,7 @@ All coefficients live in `RewardPolicy` or configuration rather than being scatt
 ## 7. File Structure
 
 ```text
-RELEGame/
+RELESUMO/
 ├─ Assets/_Project/
 │  ├─ Scenes/                 # SumoTraining.unity
 │  ├─ Prefabs/                # Arena, SumoAgent
@@ -87,7 +89,7 @@ RELEGame/
 │  │  ├─ Gameplay/            # ArenaBoundary, SumoMotor
 │  │  ├─ Agents/              # SumoAgent, ScriptedOpponent
 │  │  └─ UI/                  # MatchHUD
-│  ├─ Settings/               # physics/material/reward assets
+│  ├─ Settings/               # 3D renderer, physics/material/reward assets
 │  └─ Tests/{EditMode,PlayMode}/
 └─ Training/
    ├─ Configs/                # PPO and self-play YAML
@@ -99,7 +101,8 @@ RELEGame/
 
 - Core/Gameplay does not depend on the ML-Agents API; dependencies point from `Agents` toward gameplay contracts.
 - Only `MatchCoordinator` changes round state; a guard flag prevents duplicate simultaneous termination.
-- Fighters move through `Rigidbody2D` during physics steps, never through direct `Transform` movement during a round.
+- Fighters move through `Rigidbody` during `FixedUpdate`, never through direct `Transform` movement during a round.
+- The MVP locks X/Z body rotation so agents remain upright while retaining Y-axis rotation and full positional movement; a learned balance controller belongs to the post-MVP ragdoll scope.
 - Arena geometry, forces, mass, cooldowns, and reward coefficients are configurable without code changes.
 - Training and evaluation modes use the same prefab and physics.
 
@@ -109,4 +112,4 @@ The MVP is complete when two agents can run at least 1,000 automated episodes wi
 
 ## 10. Out of Scope for the MVP
 
-Ragdoll stickmen, individual limb control, networked play, complex attacks, multiple arena types, production art/audio, and mobile optimization. These may be added only after baseline training is stable.
+Ragdoll stickmen, learned balance, individual limb control, networked play, complex attacks, multiple arena types, production art/audio, and mobile optimization. These may be added only after baseline training is stable.
