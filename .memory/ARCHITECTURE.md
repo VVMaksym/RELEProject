@@ -27,7 +27,7 @@ A Unity environment for training and comparing two RL agents. Each agent control
 |---|---|---|
 | `MatchCoordinator` | Starts/resets rounds, determines win/loss/draw, and ends episodes | Move fighters or calculate ML observations |
 | `ArenaBoundary` | Stores the center/radius and fall threshold, projects positions onto XZ, detects ring-outs, and provides normalized edge distance | Assign rewards |
-| `SumoMotor` | Converts movement commands into planar force, yaw rotation, and shove impulses; controls cooldowns and upright constraints | Know about `Agent`, rewards, or match results |
+| `SumoMotor` | Converts a planar move vector plus dash/shove/brace flags into physics; owns aim direction, stamina, cooldowns, contact state, and upright constraints | Know about `Agent`, rewards, or match results |
 | `SumoAgent` | ML-Agents adapter for observations, actions, heuristic input, and terminal rewards | Reset the scene or directly move transforms |
 | `RewardPolicy` | Single source for dense/terminal reward coefficients | Determine physics or the winner |
 | `ScriptedOpponent` | Simple baseline opponent for validation and the initial curriculum | Be part of the final learned policy |
@@ -52,21 +52,25 @@ A Unity environment for training and comparing two RL agents. Each agent control
 
 ## 6. Agent Contract
 
-### Normalized Observations
+### Normalized Observations (future ML integration)
 
-- the agent's local planar velocity `(x, z)`, vertical velocity, and yaw angular velocity;
-- local planar vector to the arena center and normalized distance to the edge;
-- opponent's local relative position and velocity in 3D;
-- opponent's facing direction in local space;
-- shove readiness and normalized remaining time.
+- own position relative to the arena center `(x, z)`;
+- own planar velocity `(vx, vz)`;
+- current/most-recent movement direction as `aimDir (ax, az)`;
+- opponent relative position `(dx, dz)` and relative velocity `(dvx, dvz)`;
+- distance to the opponent and distance to the nearest arena edge;
+- opponent-contact flag;
+- normalized stamina, dash cooldown, shove cooldown, and brace state;
+- normalized time remaining when the match uses a timer.
 
-Observations do not contain world-space coordinates that would tie the policy to a specific arena orientation.
+Gameplay exposes this state without depending on ML-Agents. Normalization and sensor collection belong to the later agent adapter.
 
 ### Actions
 
-- continuous: forward/backward movement `[-1, 1]`;
-- continuous: yaw rotation `[-1, 1]`;
-- continuous: shove/dash strength `[0, 1]`, with cooldown enforced by `SumoMotor`.
+- continuous: planar movement `[move_x, move_z]`, each input in `[-1, 1]` and the resulting vector clamped to unit length;
+- discrete: `dash`, `shove`, and `brace`, each in `{0, 1}`;
+- dash and shove use the current or most recent non-zero movement direction (`aimDir`);
+- brace has no direction, blocks the fighter's own dash/shove, slows movement, and increases resistance to incoming physics.
 
 ### Rewards
 

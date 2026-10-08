@@ -16,7 +16,7 @@ Phase 1 — Vertical Slice.
 
 - `RELESUMO/` is the canonical Unity 6 Universal 3D project and already contains PC/Mobile URP renderer assets.
 - Only the initial `RELESUMO/Assets/Scenes/SampleScene.unity` exists; there is no gameplay code or ML-Agents dependency yet.
-- `RELEGame/` is the previous 2D project and is no longer the implementation target.
+- `RELESUMO/` is now the repository's only Unity project; the previous 2D project has been removed.
 - The MVP architecture and critical backlog have been updated for 3D.
 
 ## Constraints

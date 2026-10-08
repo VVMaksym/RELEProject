@@ -56,4 +56,20 @@
 
 **Reason:** `RELESUMO/` already contains the correct 3D URP renderer and scene template, avoiding an unnecessary conversion of the previous 2D project.
 
-**Impact:** All architecture paths and backlog implementation work target `RELESUMO/`. The old project is not deleted and remains available until the team explicitly chooses to remove it.
+**Impact:** All architecture paths and backlog implementation work target `RELESUMO/`. The legacy project's later removal is recorded in D008.
+
+## 2026-10-07 — D008: Remove the legacy 2D project
+
+**Decision:** Keep only the `RELESUMO/` Universal 3D project in the repository.
+
+**Reason:** The team confirmed that all future development will use the 3D Unity template, so retaining the superseded 2D project would create ambiguity and repository noise.
+
+**Impact:** Documentation, implementation, tests, training configuration, and future automation must resolve Unity paths exclusively from `RELESUMO/`.
+
+## 2026-10-08 — D009: Hybrid movement and combat action contract
+
+**Decision:** Replace forward/turn control with a clamped planar `[move_x, move_z]` vector and three discrete flags: dash, shove, and brace. Dash and shove follow the current or most recent movement direction.
+
+**Reason:** The same compact contract supports eight-direction keyboard movement, full analog controller movement, and later ML control without changing gameplay physics.
+
+**Impact:** `SumoCommand` and `SumoMotor` expose gameplay state for future observations, but the current cycle contains no ML-Agents integration. Brace is directionless, disables offensive actions while active, slows movement, and improves physical resistance.
