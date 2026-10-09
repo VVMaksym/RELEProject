@@ -40,6 +40,7 @@ Implementation is complete; Play Mode balancing and reset verification remain be
 - [x] Added stamina regeneration, cooldown/readiness values, grounded/contact state, planar velocity, and aim state for later observations and UI.
 - [x] Added clean motor-state reset support and dash/shove hit events for later match and reward systems.
 - [x] Fixed the gamepad button namespace/import issue that had caused Unity scripts and character control components to appear missing.
+- [x] Added camera-relative human movement for keyboard and gamepad: left/right follow the screen and forward moves away from the camera; removed Fighter 2 inversion.
 - [x] Verified the gameplay assembly builds successfully: `0 errors`, `0 warnings`.
 - [ ] In Unity Play Mode, verify movement, collision response, dash, shove, brace, airborne control, and repeated resets for both fighters.
 - [ ] Tune both fighters to an initial `Dash Velocity Change` of approximately `7`; the scene may retain the old serialized value `11` after field migration.
