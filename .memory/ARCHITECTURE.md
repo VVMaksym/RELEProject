@@ -35,6 +35,23 @@ A Unity environment for training and comparing two RL agents. Each agent control
 
 `SumoAgent` and `ScriptedOpponent` submit the same `SumoCommand` to `SumoMotor`. Manual control, the scripted baseline, and the neural policy therefore exercise the same physics.
 
+### Gameplay physics baseline
+
+The shared fighter prefab uses one root `Rigidbody` and a spherical `CapsuleCollider`. The imported visual mesh has local bounds of approximately `[-1, +1]` on every axis and the prefab root has scale `0.5`; therefore a local capsule radius of `1` and height of `2` produces a world-space sphere with radius `0.5` that matches the visible body.
+
+| Parameter | Initial value | Purpose |
+|---|---:|---|
+| Collider radius / height | `1 / 2` local (`0.5` world radius) | Match the round mesh without a separate attack volume |
+| Rigidbody mass | `3` | Give contact and impulse forces useful inertia |
+| Linear / angular damping | `0.75 / 1.5` | Preserve shove momentum while suppressing unwanted spin |
+| Acceleration / braking | `20 / 16 m/s²` | Responsive movement without instant velocity changes |
+| Normal speed limit | `4.5 m/s` | Keep positioning readable on the six-unit arena |
+| Dash velocity change | `4 m/s` | A short burst above normal speed rather than a teleport-like launch |
+| Shove impulse / lift | `9 / 0.15 N·s` | About `3 m/s` planar velocity change against an unbraced mass-3 fighter |
+| Brace mass / impulse multipliers | `1.6 / 0.6` | Strong but not near-invulnerable resistance |
+
+Movement uses `ForceMode.Acceleration`, dash uses `ForceMode.VelocityChange`, and contact attacks use `ForceMode.Impulse`. Consequently ordinary movement and dash remain independent of mass, while shove response and body-to-body collisions depend on mass. These are symmetric starting values for both fighters and must be tuned only on the shared prefab.
+
 ## 5. Episode Contract
 
 ### Start

@@ -35,16 +35,17 @@ Implementation is complete; Play Mode balancing and reset verification remain be
 - [x] Implemented semi-physical planar movement with acceleration, braking, inertia, speed resistance, and reduced air control.
 - [x] Kept fighters upright by locking Rigidbody X/Z rotation while allowing controlled Y-axis facing.
 - [x] Changed dash into a physics velocity impulse with duration, cooldown, stamina cost, and one impact per opponent per dash.
-- [x] Implemented shove as a forward overlap check followed by a directional physics impulse and a small lift impulse.
+- [x] Replaced the oversized forward shove overlap with a short contact-only shove window: the impulse lands only through real body-collider contact with an opponent in front.
 - [x] Implemented brace: reduced movement, increased Rigidbody mass, reduced incoming explicit impulses, and shorter post-hit control suppression.
 - [x] Added stamina regeneration, cooldown/readiness values, grounded/contact state, planar velocity, and aim state for later observations and UI.
 - [x] Added clean motor-state reset support and dash/shove hit events for later match and reward systems.
 - [x] Fixed the gamepad button namespace/import issue that had caused Unity scripts and character control components to appear missing.
 - [x] Added camera-relative human movement for keyboard and gamepad: left/right follow the screen and forward moves away from the camera; removed Fighter 2 inversion.
+- [x] Matched the shared collider to the round mesh and established a documented symmetric physics baseline for mass, damping, movement, dash, shove, and brace.
 - [x] Verified the gameplay assembly builds successfully: `0 errors`, `0 warnings`.
 - [ ] In Unity Play Mode, verify movement, collision response, dash, shove, brace, airborne control, and repeated resets for both fighters.
-- [ ] Tune both fighters to an initial `Dash Velocity Change` of approximately `7`; the scene may retain the old serialized value `11` after field migration.
-- [ ] Tune Rigidbody `Linear Damping` to approximately `0.5–1.0` if the current value `2` removes too much momentum.
+- [x] Set the shared initial `Dash Velocity Change` to `4` for the current six-unit arena.
+- [x] Set shared Rigidbody mass/damping to `3`, `0.75` linear, and `1.5` angular.
 - [ ] Close B003 after the Play Mode checks pass and all gameplay values feel symmetric for both fighters.
 
 ## Phase 2 — First Training

@@ -236,7 +236,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -248,9 +248,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6005262157003932985}
   serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 2
-  m_AngularDamping: 0.05
+  m_Mass: 3
+  m_LinearDamping: 0.75
+  m_AngularDamping: 1.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -264,9 +264,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &7179134075748623772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,32 +279,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0bdbb688460cd40b3780246087930f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.SumoMotor
-  acceleration: 24
-  brakingAcceleration: 20
-  maxPlanarSpeed: 6
-  overspeedResistance: 10
-  airControlMultiplier: 0.12
+  acceleration: 20
+  brakingAcceleration: 16
+  maxPlanarSpeed: 4.5
+  overspeedResistance: 8
+  airControlMultiplier: 0.1
   aimTurnSpeedDegrees: 720
   minimumGroundNormal: 0.55
-  dashVelocityChange: 7
+  dashVelocityChange: 4
   dashDuration: 0.16
   dashCooldown: 0.8
   dashStaminaCost: 25
   dashImpactImpulse: 4.5
   dashControlSuppression: 0.16
-  shoveForwardOffset: 1.1
-  shoveRadius: 0.9
-  shoveImpulse: 8
-  shoveLiftImpulse: 0.35
+  shoveActiveDuration: 0.18
+  minimumShoveAlignment: 0.2
+  shoveImpulse: 9
+  shoveLiftImpulse: 0.15
   shoveCooldown: 0.65
   shoveStaminaCost: 15
   shoveControlSuppression: 0.2
-  opponentLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  braceMovementMultiplier: 0.3
-  braceMassMultiplier: 2.5
-  braceIncomingImpulseMultiplier: 0.45
+  braceMovementMultiplier: 0.35
+  braceMassMultiplier: 1.6
+  braceIncomingImpulseMultiplier: 0.6
   maxStamina: 100
   staminaRegenerationPerSecond: 20
 --- !u!114 &7341138974743135542

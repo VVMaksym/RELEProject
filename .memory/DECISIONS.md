@@ -73,3 +73,19 @@
 **Reason:** The same compact contract supports eight-direction keyboard movement, full analog controller movement, and later ML control without changing gameplay physics.
 
 **Impact:** `SumoCommand` and `SumoMotor` expose gameplay state for future observations, but the current cycle contains no ML-Agents integration. Brace is directionless, disables offensive actions while active, slows movement, and improves physical resistance.
+
+## 2026-10-14 — D010: Shove requires physical body contact
+
+**Decision:** Remove the forward overlap-sphere attack volume. A shove now opens a short action window and applies its impulse only when the fighters' real body colliders touch and the opponent is in front of the attacker.
+
+**Reason:** Sumo fighters should push through body contact rather than hit empty space at a distance. Contact-only resolution also gives future agents a clearer and less exploitable interaction rule.
+
+**Impact:** The action contract remains unchanged, while `ShoveLanded` is emitted at most once per opponent per shove window. Fighter visuals remain independent from the root physics collider and can vary through prefab instances.
+
+## 2026-10-15 — D011: Shared spherical body and physics baseline
+
+**Decision:** Fit the shared fighter collider to the round visual mesh by using a capsule with equal diameter and height, and centralize identical initial physics values in the fighter prefab.
+
+**Reason:** Both agents need the same contact geometry and dynamics for fair training. A collider matching the visible body makes impacts understandable to humans and prevents the policy from learning invisible reach or asymmetric prefab overrides.
+
+**Impact:** Both scene fighters inherit a world-space body radius of `0.5`, mass `3`, reduced linear damping, and the same movement/combat tuning. Future balancing changes must be made on the shared prefab and recorded with evaluation results.

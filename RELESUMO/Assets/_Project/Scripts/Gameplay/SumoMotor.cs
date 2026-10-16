@@ -14,51 +14,73 @@ namespace ReleSumo.Gameplay
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     public sealed class SumoMotor : MonoBehaviour
     {
-        private const int ShoveHitBufferSize = 16;
         private const float DirectionEpsilon = 0.0001f;
 
         [Header("Movement")]
-        [SerializeField, Min(0f)] private float acceleration = 28f;
-        [SerializeField, Min(0f)] private float brakingAcceleration = 20f;
-        [SerializeField, Min(0f)] private float maxPlanarSpeed = 6f;
-        [SerializeField, Min(0f)] private float overspeedResistance = 10f;
-        [SerializeField, Range(0f, 1f)] private float airControlMultiplier = 0.12f;
+        [Tooltip("Maximum horizontal acceleration while movement input is held, in m/s².")]
+        [SerializeField, Min(0f)] private float acceleration = 20f;
+        [Tooltip("Maximum horizontal deceleration with no movement input, in m/s².")]
+        [SerializeField, Min(0f)] private float brakingAcceleration = 16f;
+        [Tooltip("Normal horizontal movement speed limit, in m/s.")]
+        [SerializeField, Min(0f)] private float maxPlanarSpeed = 4.5f;
+        [Tooltip("Acceleration used to bring post-impact or post-dash speed back toward the normal limit.")]
+        [SerializeField, Min(0f)] private float overspeedResistance = 8f;
+        [Tooltip("Fraction of normal movement control available while airborne.")]
+        [SerializeField, Range(0f, 1f)] private float airControlMultiplier = 0.1f;
+        [Tooltip("Maximum visual/body yaw rotation speed in degrees per second.")]
         [SerializeField, Min(0f)] private float aimTurnSpeedDegrees = 720f;
+        [Tooltip("Minimum upward contact-normal dot product that counts as grounded.")]
         [SerializeField, Range(0f, 1f)] private float minimumGroundNormal = 0.55f;
 
         [Header("Dash")]
         [FormerlySerializedAs("dashSpeed")]
-        [SerializeField, Min(0f)] private float dashVelocityChange = 7f;
+        [Tooltip("Instant horizontal speed added when dash starts, in m/s.")]
+        [SerializeField, Min(0f)] private float dashVelocityChange = 4f;
+        [Tooltip("Time during which normal movement control is locked and dash contact can land.")]
         [SerializeField, Min(0f)] private float dashDuration = 0.16f;
+        [Tooltip("Minimum time between dash attempts, in seconds.")]
         [SerializeField, Min(0f)] private float dashCooldown = 0.8f;
+        [Tooltip("Stamina spent by a successful dash start.")]
         [SerializeField, Min(0f)] private float dashStaminaCost = 25f;
+        [Tooltip("Additional contact impulse applied to an opponent during a dash, in N·s.")]
         [SerializeField, Min(0f)] private float dashImpactImpulse = 4.5f;
+        [Tooltip("How long the opponent temporarily loses movement control after a dash hit.")]
         [SerializeField, Min(0f)] private float dashControlSuppression = 0.16f;
 
         [Header("Shove")]
-        [SerializeField, Min(0f)] private float shoveForwardOffset = 1.1f;
-        [SerializeField, Min(0.01f)] private float shoveRadius = 0.9f;
-        [SerializeField, Min(0f)] private float shoveImpulse = 7f;
-        [SerializeField, Min(0f)] private float shoveLiftImpulse = 0.2f;
+        [Tooltip("Short window in which real body contact can turn the shove into a hit.")]
+        [SerializeField, Min(0.02f)] private float shoveActiveDuration = 0.18f;
+        [Tooltip("Required dot product between shove direction and direction to the opponent. Higher values narrow the forward contact cone.")]
+        [SerializeField, Range(-1f, 1f)] private float minimumShoveAlignment = 0.2f;
+        [Tooltip("Horizontal contact impulse applied by a successful shove, in N·s.")]
+        [SerializeField, Min(0f)] private float shoveImpulse = 9f;
+        [Tooltip("Small upward impulse that helps the opponent slide instead of sticking to the floor.")]
+        [SerializeField, Min(0f)] private float shoveLiftImpulse = 0.15f;
+        [Tooltip("Minimum time between shove attempts, in seconds.")]
         [SerializeField, Min(0f)] private float shoveCooldown = 0.65f;
+        [Tooltip("Stamina spent when a shove starts, including a miss.")]
         [SerializeField, Min(0f)] private float shoveStaminaCost = 15f;
+        [Tooltip("How long the opponent temporarily loses movement control after a shove hit.")]
         [SerializeField, Min(0f)] private float shoveControlSuppression = 0.2f;
-        [SerializeField] private LayerMask opponentLayers = ~0;
 
         [Header("Brace")]
-        [SerializeField, Range(0f, 1f)] private float braceMovementMultiplier = 0.3f;
-        [SerializeField, Min(1f)] private float braceMassMultiplier = 2.5f;
-        [SerializeField, Range(0f, 1f)] private float braceIncomingImpulseMultiplier = 0.45f;
+        [Tooltip("Fraction of normal movement speed retained while bracing.")]
+        [SerializeField, Range(0f, 1f)] private float braceMovementMultiplier = 0.35f;
+        [Tooltip("Temporary Rigidbody mass multiplier while bracing.")]
+        [SerializeField, Min(1f)] private float braceMassMultiplier = 1.6f;
+        [Tooltip("Multiplier applied to explicit dash/shove impulses received while bracing.")]
+        [SerializeField, Range(0f, 1f)] private float braceIncomingImpulseMultiplier = 0.6f;
 
         [Header("Stamina")]
+        [Tooltip("Maximum shared stamina pool for dash and shove.")]
         [SerializeField, Min(0.01f)] private float maxStamina = 100f;
+        [Tooltip("Stamina restored per second while not bracing.")]
         [SerializeField, Min(0f)] private float staminaRegenerationPerSecond = 20f;
 
-        private readonly Collider[] shoveHits = new Collider[ShoveHitBufferSize];
-        private readonly HashSet<Rigidbody> shovedBodies = new();
         private readonly HashSet<Collider> opponentContacts = new();
         private readonly HashSet<Collider> groundContacts = new();
         private readonly HashSet<SumoMotor> dashHitOpponents = new();
+        private readonly HashSet<SumoMotor> shoveHitOpponents = new();
 
         private Rigidbody body;
         private SumoCommand command;
@@ -66,9 +88,11 @@ namespace ReleSumo.Gameplay
         private float baseMass;
         private float stamina;
         private float dashTimeRemaining;
+        private float shoveTimeRemaining;
         private float dashCooldownRemaining;
         private float shoveCooldownRemaining;
         private float controlSuppressionRemaining;
+        private Vector3 shoveDirection;
 
         public event Action<SumoMotor> DashLanded;
         public event Action<SumoMotor> ShoveLanded;
@@ -87,6 +111,7 @@ namespace ReleSumo.Gameplay
         public float ShoveReadiness =>
             shoveCooldown <= 0f ? 1f : 1f - Mathf.Clamp01(shoveCooldownRemaining / shoveCooldown);
         public bool IsDashing => dashTimeRemaining > 0f;
+        public bool IsShoving => shoveTimeRemaining > 0f;
         public bool IsBracing { get; private set; }
         public bool IsGrounded => groundContacts.Count > 0;
         public bool IsInContact => opponentContacts.Count > 0;
@@ -109,6 +134,8 @@ namespace ReleSumo.Gameplay
             opponentContacts.Clear();
             groundContacts.Clear();
             dashHitOpponents.Clear();
+            shoveHitOpponents.Clear();
+            shoveTimeRemaining = 0f;
 
             if (body != null)
             {
@@ -148,11 +175,13 @@ namespace ReleSumo.Gameplay
         {
             UpdateCollisionState(collision);
             TryApplyDashImpact(collision.collider);
+            TryApplyShoveImpact(collision.collider);
         }
 
         private void OnCollisionStay(Collision collision)
         {
             UpdateCollisionState(collision);
+            TryApplyShoveImpact(collision.collider);
         }
 
         private void OnCollisionExit(Collision collision)
@@ -178,12 +207,15 @@ namespace ReleSumo.Gameplay
             command = SumoCommand.None;
             stamina = maxStamina;
             dashTimeRemaining = 0f;
+            shoveTimeRemaining = 0f;
             dashCooldownRemaining = 0f;
             shoveCooldownRemaining = 0f;
             controlSuppressionRemaining = 0f;
             opponentContacts.Clear();
             groundContacts.Clear();
             dashHitOpponents.Clear();
+            shoveHitOpponents.Clear();
+            shoveDirection = Vector3.zero;
             SetBraceState(false);
 
             body.linearVelocity = Vector3.zero;
@@ -215,8 +247,8 @@ namespace ReleSumo.Gameplay
         }
 
         /// <summary>
-        /// Attempts a physics shove in the current aim direction.
-        /// Returns true when the attack starts, even if it misses.
+        /// Opens a short shove window in the current aim direction.
+        /// The impulse lands only through a real collider contact with an opponent in front.
         /// </summary>
         public bool TryShove()
         {
@@ -229,13 +261,17 @@ namespace ReleSumo.Gameplay
             }
 
             shoveCooldownRemaining = shoveCooldown;
-            ApplyShoveHits();
+            shoveTimeRemaining = shoveActiveDuration;
+            shoveDirection = aimDirection;
+            shoveHitOpponents.Clear();
+            ApplyShoveToCurrentContacts();
             return true;
         }
 
         private void StepTimers()
         {
             dashTimeRemaining = Mathf.Max(0f, dashTimeRemaining - Time.fixedDeltaTime);
+            shoveTimeRemaining = Mathf.Max(0f, shoveTimeRemaining - Time.fixedDeltaTime);
             dashCooldownRemaining = Mathf.Max(0f, dashCooldownRemaining - Time.fixedDeltaTime);
             shoveCooldownRemaining = Mathf.Max(0f, shoveCooldownRemaining - Time.fixedDeltaTime);
             controlSuppressionRemaining = Mathf.Max(0f, controlSuppressionRemaining - Time.fixedDeltaTime);
@@ -311,41 +347,42 @@ namespace ReleSumo.Gameplay
             body.MoveRotation(nextRotation);
         }
 
-        private void ApplyShoveHits()
+        private void ApplyShoveToCurrentContacts()
         {
-            Vector3 center = body.worldCenterOfMass + aimDirection * shoveForwardOffset;
-            int hitCount = Physics.OverlapSphereNonAlloc(
-                center,
-                shoveRadius,
-                shoveHits,
-                opponentLayers,
-                QueryTriggerInteraction.Ignore);
-
-            shovedBodies.Clear();
-
-            for (int index = 0; index < hitCount; index++)
+            foreach (Collider opponentCollider in opponentContacts)
             {
-                Collider hit = shoveHits[index];
-                shoveHits[index] = null;
-
-                if (hit == null)
-                {
-                    continue;
-                }
-
-                SumoMotor opponent = hit.GetComponentInParent<SumoMotor>();
-                if (opponent == null || opponent == this || !shovedBodies.Add(opponent.Body))
-                {
-                    continue;
-                }
-
-                Vector3 impulse =
-                    aimDirection * shoveImpulse +
-                    Vector3.up * shoveLiftImpulse;
-
-                opponent.ReceiveImpact(impulse, shoveControlSuppression);
-                ShoveLanded?.Invoke(opponent);
+                TryApplyShoveImpact(opponentCollider);
             }
+        }
+
+        private void TryApplyShoveImpact(Collider otherCollider)
+        {
+            if (!IsShoving || otherCollider == null)
+            {
+                return;
+            }
+
+            SumoMotor opponent = otherCollider.GetComponentInParent<SumoMotor>();
+            if (opponent == null || opponent == this || shoveHitOpponents.Contains(opponent))
+            {
+                return;
+            }
+
+            Vector3 directionToOpponent = opponent.Body.worldCenterOfMass - body.worldCenterOfMass;
+            directionToOpponent.y = 0f;
+            if (directionToOpponent.sqrMagnitude < DirectionEpsilon ||
+                Vector3.Dot(shoveDirection, directionToOpponent.normalized) < minimumShoveAlignment)
+            {
+                return;
+            }
+
+            shoveHitOpponents.Add(opponent);
+            Vector3 impulse =
+                shoveDirection * shoveImpulse +
+                Vector3.up * shoveLiftImpulse;
+
+            opponent.ReceiveImpact(impulse, shoveControlSuppression);
+            ShoveLanded?.Invoke(opponent);
         }
 
         private void TryApplyDashImpact(Collider otherCollider)
@@ -462,8 +499,8 @@ namespace ReleSumo.Gameplay
             dashStaminaCost = Mathf.Max(0f, dashStaminaCost);
             dashImpactImpulse = Mathf.Max(0f, dashImpactImpulse);
             dashControlSuppression = Mathf.Max(0f, dashControlSuppression);
-            shoveForwardOffset = Mathf.Max(0f, shoveForwardOffset);
-            shoveRadius = Mathf.Max(0.01f, shoveRadius);
+            shoveActiveDuration = Mathf.Max(0.02f, shoveActiveDuration);
+            minimumShoveAlignment = Mathf.Clamp(minimumShoveAlignment, -1f, 1f);
             shoveImpulse = Mathf.Max(0f, shoveImpulse);
             shoveLiftImpulse = Mathf.Max(0f, shoveLiftImpulse);
             shoveCooldown = Mathf.Max(0f, shoveCooldown);
@@ -474,17 +511,5 @@ namespace ReleSumo.Gameplay
             staminaRegenerationPerSecond = Mathf.Max(0f, staminaRegenerationPerSecond);
         }
 
-        private void OnDrawGizmosSelected()
-        {
-            Rigidbody currentBody = body != null ? body : GetComponent<Rigidbody>();
-            Vector3 origin = currentBody != null ? currentBody.worldCenterOfMass : transform.position;
-            Vector3 direction = aimDirection.sqrMagnitude >= DirectionEpsilon
-                ? aimDirection
-                : GetInitialAimDirection();
-
-            Gizmos.color = new Color(1f, 0.55f, 0.1f, 0.9f);
-            Gizmos.DrawLine(origin, origin + direction * shoveForwardOffset);
-            Gizmos.DrawWireSphere(origin + direction * shoveForwardOffset, shoveRadius);
-        }
     }
 }
