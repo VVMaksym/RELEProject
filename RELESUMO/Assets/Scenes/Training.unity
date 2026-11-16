@@ -601,6 +601,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 207518381}
+  - component: {fileID: 207518382}
   m_Layer: 0
   m_Name: Scene (5)
   m_TagString: Untagged
@@ -626,6 +627,26 @@ Transform:
   - {fileID: 946849293}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &207518382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207518380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1 &237689472
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +656,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 237689473}
+  - component: {fileID: 237689474}
   m_Layer: 0
   m_Name: Scene (6)
   m_TagString: Untagged
@@ -660,6 +682,26 @@ Transform:
   - {fileID: 1416863845}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &237689474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237689472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1 &263614598
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +872,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 288917568}
+  - component: {fileID: 288917569}
   m_Layer: 0
   m_Name: Scene (14)
   m_TagString: Untagged
@@ -855,6 +898,26 @@ Transform:
   - {fileID: 113168792}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &288917569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288917567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1 &311828844
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,6 +927,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 311828845}
+  - component: {fileID: 311828846}
   m_Layer: 0
   m_Name: Scene (2)
   m_TagString: Untagged
@@ -889,6 +953,26 @@ Transform:
   - {fileID: 2110256286}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &311828846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311828844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,6 +1628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 454834884}
+  - component: {fileID: 454834885}
   m_Layer: 0
   m_Name: Scene (16)
   m_TagString: Untagged
@@ -1569,6 +1654,26 @@ Transform:
   - {fileID: 1475542581}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &454834885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454834883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1001 &505869850
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2008,6 +2113,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 639572191}
+  - component: {fileID: 639572192}
   m_Layer: 0
   m_Name: Scene (3)
   m_TagString: Untagged
@@ -2033,6 +2139,26 @@ Transform:
   - {fileID: 826187563}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &639572192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639572190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!4 &660823677 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3596678350028767098, guid: 3002d840138e31946878ec1c23ea0a7d, type: 3}
@@ -2047,6 +2173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 684267554}
+  - component: {fileID: 684267555}
   m_Layer: 0
   m_Name: Scene (10)
   m_TagString: Untagged
@@ -2072,6 +2199,26 @@ Transform:
   - {fileID: 1325046664}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &684267555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684267553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1 &687114663
 GameObject:
   m_ObjectHideFlags: 0
@@ -2081,6 +2228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 687114664}
+  - component: {fileID: 687114665}
   m_Layer: 0
   m_Name: Scene (9)
   m_TagString: Untagged
@@ -2106,6 +2254,26 @@ Transform:
   - {fileID: 1827369523}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &687114665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687114663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1 &703559648
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,6 +2283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 703559649}
+  - component: {fileID: 703559650}
   m_Layer: 0
   m_Name: Scene (7)
   m_TagString: Untagged
@@ -2140,6 +2309,26 @@ Transform:
   - {fileID: 1754309165}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &703559650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703559648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1001 &794091306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3458,6 +3647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1171235185}
+  - component: {fileID: 1171235186}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -3483,6 +3673,26 @@ Transform:
   - {fileID: 1322055434}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1171235186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171235184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1 &1231930266
 GameObject:
   m_ObjectHideFlags: 0
@@ -3492,6 +3702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1231930267}
+  - component: {fileID: 1231930268}
   m_Layer: 0
   m_Name: Scene (1)
   m_TagString: Untagged
@@ -3517,6 +3728,26 @@ Transform:
   - {fileID: 1961744722}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1231930268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231930266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1001 &1297056157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3605,6 +3836,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1313458842}
+  - component: {fileID: 1313458843}
   m_Layer: 0
   m_Name: Scene (17)
   m_TagString: Untagged
@@ -3630,6 +3862,26 @@ Transform:
   - {fileID: 505869851}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1313458843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313458841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!4 &1322055434 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3596678350028767098, guid: 3002d840138e31946878ec1c23ea0a7d, type: 3}
@@ -4275,6 +4527,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1469076779}
+  - component: {fileID: 1469076780}
   m_Layer: 0
   m_Name: Scene (8)
   m_TagString: Untagged
@@ -4300,6 +4553,26 @@ Transform:
   - {fileID: 164645478}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1469076780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469076778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1001 &1475542580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4515,6 +4788,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1520688296}
+  - component: {fileID: 1520688297}
   m_Layer: 0
   m_Name: Scene (12)
   m_TagString: Untagged
@@ -4540,6 +4814,26 @@ Transform:
   - {fileID: 1863813035}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1520688297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520688295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1 &1526904151
 GameObject:
   m_ObjectHideFlags: 0
@@ -4979,6 +5273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1706828757}
+  - component: {fileID: 1706828758}
   m_Layer: 0
   m_Name: Scene (4)
   m_TagString: Untagged
@@ -5004,6 +5299,26 @@ Transform:
   - {fileID: 1050118524}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1706828758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706828756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1001 &1754309164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5219,6 +5534,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1821522974}
+  - component: {fileID: 1821522975}
   m_Layer: 0
   m_Name: Scene (13)
   m_TagString: Untagged
@@ -5244,6 +5560,26 @@ Transform:
   - {fileID: 1549999980}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1821522975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821522973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1001 &1827369522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5693,6 +6029,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2036155723}
+  - component: {fileID: 2036155724}
   m_Layer: 0
   m_Name: Scene (11)
   m_TagString: Untagged
@@ -5718,6 +6055,26 @@ Transform:
   - {fileID: 1377898143}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2036155724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036155722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1 &2086813926
 GameObject:
   m_ObjectHideFlags: 0
@@ -5727,6 +6084,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2086813927}
+  - component: {fileID: 2086813928}
   m_Layer: 0
   m_Name: Scene (15)
   m_TagString: Untagged
@@ -5752,6 +6110,26 @@ Transform:
   - {fileID: 47435090}
   m_Father: {fileID: 269477987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2086813928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086813926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79d188fcb1541538f520518efbc69fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReleSumo.Gameplay.ArenaController
+  fighterOne: {fileID: 0}
+  fighterTwo: {fileID: 0}
+  centerOffset: {x: 0, y: 0, z: 0}
+  arenaRadius: 3
+  fallHeight: -1
+  respawnDelay: 0.1
+  fighterOneScore: 0
+  fighterTwoScore: 0
 --- !u!1 &2100429173
 GameObject:
   m_ObjectHideFlags: 0
